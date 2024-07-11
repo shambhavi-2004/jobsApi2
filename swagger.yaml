@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: jobs2
+  contact: {}
+  version: "1.0"
+servers:
+  - url: https://jobs-api-1-b3q0.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: loginUser
+      operationId: loginUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/loginUserRequest"
+                - example:
+                    name: martin
+                    email: martin@gmail.com
+                    password: secrets
+            example:
+              name: martin
+              email: martin@gmail.com
+              password: secrets
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: registerUser
+      operationId: registerUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/registerUserRequest"
+                - example:
+                    email: tailor@gmail.com
+                    password: $2a$10$iIrJjAS0LzVI1vQ9eviWjuEO3wmvLGVtxnsA7C1mHBC/v48C43iDC
+            example:
+              email: tailor@gmail.com
+              password: $2a$10$iIrJjAS0LzVI1vQ9eviWjuEO3wmvLGVtxnsA7C1mHBC/v48C43iDC
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+  /jobs/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The jobs ID
+    patch:
+      tags:
+        - jobs
+      summary: accessTokenShort
+      operationId: accessTokenShort
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/accessTokenShortRequest"
+                - example:
+                    company: mcKinsey
+            example:
+              company: mcKinsey
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+components:
+  schemas:
+    loginUserRequest:
+      title: loginUserRequest
+      required:
+        - name
+        - email
+        - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: martin
+        email: martin@gmail.com
+        password: secrets
+    registerUserRequest:
+      title: registerUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: tailor@gmail.com
+        password: $2a$10$iIrJjAS0LzVI1vQ9eviWjuEO3wmvLGVtxnsA7C1mHBC/v48C43iDC
+    accessTokenShortRequest:
+      title: accessTokenShortRequest
+      required:
+        - company
+      type: object
+      properties:
+        company:
+          type: string
+      example:
+        company: mcKinsey
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: auth
+    description: ""
+  - name: jobs
+    description: ""
